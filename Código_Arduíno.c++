@@ -28,7 +28,7 @@ void tocarTom(int freq, int duracaoMs) {
   long ciclos = (long)freq * duracaoMs / 1000;
   for (long i = 0; i < ciclos; i++) {
     digitalWrite(buzzer, HIGH);  
-    delayMicroseconds(meioPeriodo); // por leds aqui
+    delayMicroseconds(meioPeriodo);
     digitalWrite(buzzer, LOW);
     delayMicroseconds(meioPeriodo);
   }
@@ -37,7 +37,7 @@ void tocarTom(int freq, int duracaoMs) {
 void sirene() {
   unsigned long inicio = millis();
   while (millis() - inicio < 3000) { // muda o tempo aq
-    tocarTom(800, 300);              // som 1
+    tocarTom(800, 300);
     digitalWrite(led_1_red, 255);
     digitalWrite(led_1_green, 0);
     digitalWrite(led_1_blue, 0);
@@ -46,7 +46,7 @@ void sirene() {
     digitalWrite(led_2_blue, 0);
     digitalWrite(led_A, HIGH);
     digitalWrite(led_B, HIGH);
-    tocarTom(1200, 300);             // som 2 se quiser
+    tocarTom(1200, 300);
     digitalWrite(led_1_red, 0);
     digitalWrite(led_1_green, 0);
     digitalWrite(led_1_blue, 0);
@@ -57,7 +57,6 @@ void sirene() {
     digitalWrite(led_B, LOW);
   }
 }
-// botão daqui pra cima
 
 void setup() {
   Serial.begin(9600);
@@ -69,10 +68,8 @@ void setup() {
     pinMode(led_2_green, OUTPUT);
     pinMode(led_2_blue, OUTPUT); 
 
-    // botão daqui pra baixo
     pinMode(botao, INPUT_PULLUP);
     pinMode(buzzer, OUTPUT);
-    // botão daqui pra cima
 }
 
 void funcao_leds_standby() {
