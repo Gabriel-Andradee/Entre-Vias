@@ -6,11 +6,11 @@ Projeto desenvolvido com o objetivo de proporcionar maior previsibilidade, efici
 Sistema embarcado baseado em Arduino que utiliza sensores ultrassônicos para monitorar distâncias e emitir alertas visuais (LEDs RGB) e sonoros (Buzzer) para auxiliar na segurança e controle de fluxo.
 
 ## 🛠️ Componentes Utilizados
-* 1x Tela LCD 3,5 Polegadas
+* 1x Tela TFT-Shield 3,5 Polegadas
 * 2x Placa Arduino (Uno / Nano)
 * 2x Sensores Ultrassônicos (HC-SR04)
 * 2x LEDs RGB
-* 1x Alto-Falante
+* 2x Alto-Falante
 * 1x Botão (Push Button)
 * Jumpers e Resistores
 * 1x Base de isopor 100X50cm
