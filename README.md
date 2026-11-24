@@ -44,4 +44,7 @@ Sistema embarcado baseado em Arduino que utiliza sensores ultrassônicos para mo
 ## 👥 Equipe
 * **Gabriel Andrade** - [@Gabriel-Andradee](https://github.com/Gabriel-Andradee)
 * **Gabriel Guimarães** - [@Gabriel-Guimaraes-c](https://github.com/Gabriel-Guimaraes-c)
+* **Luis Gabriel** - [@luis-lippo](https://github.com/Luis-Gabriel)
+* **Caua Victor** - [@cvps2-maker](https://github.com/cvps2)
+* **Lorena Ohana**
 * *[Adicione aqui o nome e link do GitHub dos seus amigos]*
