@@ -1,37 +1,34 @@
 #include <Ultrasonic.h>
 
-const int led_1_red = 3;
-const int led_1_green = 5;
-const int led_1_blue= 6;
+const int led_1_red = 2;
+const int led_1_green = 3;
+const int led_1_blue= 4;
 
-const int led_2_red = 9;
-const int led_2_green = 10;
-const int led_2_blue = 11;
+const int led_2_red = 5;
+const int led_2_green = 6;
+const int led_2_blue = 7;
 
-const int sensor_1_trig = 2;
-const int sensor_1_echo = 4;
+const int sensor_1_trig = 8;
+const int sensor_1_echo = 9;
 
-const int sensor_2_trig = 7;
-const int sensor_2_echo = 8;
+const int botao = 10;
+const int buzzer = 11;
 
-const int botao = 12;
-const int buzzer = 13;
+const int led_A = 12;
+const int led_B = 13;
 
-const int distancia_sensor_maxima = 300; // medir largura da parada medida pelo sensor e inserir aqui
+const int distancia_sensor_maxima = 10; // medir largura da parada medida pelo sensor e inserir aqui
 int distancia_sensor_1;
-int distancia_sensor_2;
 
 Ultrasonic sensor_1 (sensor_1_trig, sensor_1_echo);
-Ultrasonic sensor_2 (sensor_2_trig, sensor_2_echo);
-
-// botão daqui pra baixo
 
 void tocarTom(int freq, int duracaoMs) {
-  long meioPeriodo = 500000L / freq;
+  
+  long meioPeriodo = 500000 / freq;
   long ciclos = (long)freq * duracaoMs / 1000;
   for (long i = 0; i < ciclos; i++) {
-    digitalWrite(buzzer, HIGH);
-    delayMicroseconds(meioPeriodo);
+    digitalWrite(buzzer, HIGH);  
+    delayMicroseconds(meioPeriodo); // por leds aqui
     digitalWrite(buzzer, LOW);
     delayMicroseconds(meioPeriodo);
   }
@@ -41,7 +38,23 @@ void sirene() {
   unsigned long inicio = millis();
   while (millis() - inicio < 3000) { // muda o tempo aq
     tocarTom(800, 300);              // som 1
+    digitalWrite(led_1_red, 255);
+    digitalWrite(led_1_green, 0);
+    digitalWrite(led_1_blue, 0);
+    digitalWrite(led_2_red, 255);
+    digitalWrite(led_2_green, 0);
+    digitalWrite(led_2_blue, 0);
+    digitalWrite(led_A, HIGH);
+    digitalWrite(led_B, HIGH);
     tocarTom(1200, 300);             // som 2 se quiser
+    digitalWrite(led_1_red, 0);
+    digitalWrite(led_1_green, 0);
+    digitalWrite(led_1_blue, 0);
+    digitalWrite(led_2_red, 0);
+    digitalWrite(led_2_green, 0);
+    digitalWrite(led_2_blue, 0);
+    digitalWrite(led_A, LOW);
+    digitalWrite(led_B, LOW);
   }
 }
 // botão daqui pra cima
@@ -63,51 +76,53 @@ void setup() {
 }
 
 void funcao_leds_standby() {
-  analogWrite(led_1_red, 255);
-  analogWrite(led_1_green, 102);
-  analogWrite(led_1_blue, 0);
+  digitalWrite(led_1_red, 255);
+  digitalWrite(led_1_green, 0);
+  digitalWrite(led_1_blue, 0);
 
-  analogWrite(led_2_red, 255);
-  analogWrite(led_2_green, 102);
-  analogWrite(led_2_blue, 0);
+  digitalWrite(led_2_red, 255);
+  digitalWrite(led_2_green, 0);
+  digitalWrite(led_2_blue, 0);
+
+  digitalWrite(led_A, LOW);
+  digitalWrite(led_B, LOW);
 }
 
 void funcao_leds_ativo(){
-  analogWrite(led_1_red, 102);
-  analogWrite(led_1_green, 255);
-  analogWrite(led_1_blue, 204);
+  digitalWrite(led_1_red, 255);
+  digitalWrite(led_1_green, 255);
+  digitalWrite(led_1_blue, 255);
 
-  analogWrite(led_2_red, 102);
-  analogWrite(led_2_green, 255);
-  analogWrite(led_2_blue, 204);
+  digitalWrite(led_2_red, 255);
+  digitalWrite(led_2_green, 255);
+  digitalWrite(led_2_blue, 255);
+
+  digitalWrite(led_A, HIGH);
+  digitalWrite(led_B, HIGH);
 }
 
 void loop() {
+  unsigned long min_tempo;
+  Serial.print("millis: ");
+  Serial.print(millis());
+  Serial.print("   ");
+  Serial.print("tempo: ");
+  Serial.print(min_tempo);
+  Serial.print("   ");
   distancia_sensor_1 = sensor_1.read();
-  distancia_sensor_2 = sensor_2.read();
 
   Serial.print("Sensor 1: ");
   Serial.print(sensor_1.read());
   Serial.println("cm");
-  Serial.print("Sensor 2: ");
-  Serial.print(sensor_2.read());
-  Serial.println("cm");
 
-  // botão dnv daqui pra baixo
-
-  unsigned long t = millis();
-  while (millis() - t < 1500) { // coloquei o teu delay do serial aq lippo
-    if (digitalRead(botao) == LOW) {
-      sirene();
-      break;
+  if (digitalRead(botao) == LOW) {
+    sirene();
     }
-  }
-  // botão dnv daqui pra cima
-
-  if ((distancia_sensor_1 < distancia_sensor_maxima) or (distancia_sensor_2 < distancia_sensor_maxima)){
+  if (distancia_sensor_1 < distancia_sensor_maxima){
     funcao_leds_ativo();
+    min_tempo = millis();
   }
-  else{
+  if (min_tempo < (millis() - 5000)){
     funcao_leds_standby();
   }
 }
